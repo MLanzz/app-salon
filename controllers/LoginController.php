@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Model\User;
 use MVC\Router;
 
 class LoginController {
@@ -24,8 +25,14 @@ class LoginController {
     }
 
     public static function createAccount(Router $router) {
+        
+        $user = new User();
+        if($_SERVER["REQUEST_METHOD"] === "POST") {
+            $user->sincronizar($_POST);
+        } 
+        
         $router->render("auth/createAccount", [
-
+            "user" => $user
         ]);
     }
 }
