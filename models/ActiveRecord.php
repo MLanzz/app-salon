@@ -30,7 +30,7 @@ class ActiveRecord {
     }
 
     // Consulta SQL para crear un objeto en Memoria
-    public static function consultarSQL($query) {
+    public static function querySQL($query) {
         // Consultar la base de datos
         $resultado = self::$db->query($query);
 
@@ -105,21 +105,28 @@ class ActiveRecord {
     // Todos los registros
     public static function all() {
         $query = "SELECT * FROM " . static::$table;
-        $resultado = self::consultarSQL($query);
+        $resultado = self::querySQL($query);
         return $resultado;
     }
 
     // Busca un registro por su id
     public static function find($id) {
         $query = "SELECT * FROM " . static::$table  ." WHERE id = {$id}";
-        $resultado = self::consultarSQL($query);
+        $resultado = self::querySQL($query);
+        return array_shift( $resultado ) ;
+    }
+    
+    // Filtramos por una columna especificada
+    public static function where($key, $value) {
+        $query = "SELECT * FROM " . static::$table  ." WHERE {$key} = '{$value}'";
+        $resultado = self::querySQL($query);
         return array_shift( $resultado ) ;
     }
 
     // Obtener Registros con cierta cantidad
     public static function get($limite) {
         $query = "SELECT * FROM " . static::$table . " LIMIT {$limite}";
-        $resultado = self::consultarSQL($query);
+        $resultado = self::querySQL($query);
         return array_shift( $resultado ) ;
     }
 

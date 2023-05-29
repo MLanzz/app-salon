@@ -72,7 +72,26 @@ class LoginController {
     }
 
     public static function confirmAccount(Router $router) {
-        $router->render("auth/confirmAccount", []);
+        $alerts = [];
+
+        $token = s($_GET["token"]);
+
+        $user = User::where('token', $token);
+
+        if ($user) {
+            $user->token = '';
+            $user->isConfirmed = 1;
+
+            $user->update();
+            
+            $alerts['success'][] = "Cuenta confirmada correctamente";
+        } else {
+            $alerts['errors'][] = "El token de confirmación no es valido";
+        }
+        
+        $router->render("auth/confirmAccount", [
+            "alerts" => $alerts
+        ]);
     }
 
     public static function confirmAccountMessage(Router $router) {
