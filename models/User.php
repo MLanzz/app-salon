@@ -2,6 +2,8 @@
 
 namespace Model;
 
+use LengthException;
+
 class User extends ActiveRecord {
     // Base de datos
     protected static $table = "users";
@@ -27,5 +29,33 @@ class User extends ActiveRecord {
         $this->isConfirmed = $args["isConfirmed"] ?? 0;
         $this->token = $args["token"] ?? "";
         $this->password = $args["password"] ?? "";
+    }
+
+    // Mensajes de validación para la creación de una cuenta
+    public function validateUser() {
+        if(!$this->firstName) {
+            self::$alerts["errors"][] = "El nombre del usuario es obligatorio";
+        }
+
+        if(!$this->lastName) {
+            self::$alerts["errors"][] = "El apellido del usuario es obligatorio";
+        }
+
+        if(!$this->email) {
+            self::$alerts["errors"][] = "El e-mail del usuario es obligatorio";
+        }
+
+        if(!$this->phone) {
+            self::$alerts["errors"][] = "El teléfono del usuario es obligatorio";
+        }
+
+        if(!$this->password) {
+            self::$alerts["errors"][] = "La contraseña es obligatoria";
+        } elseif (strlen($this->password) < 6) {
+            self::$alerts["errors"][] = "La contraseña debe tener un minimo de 6 caracteres";
+        }
+
+
+        return self::$alerts;
     }
 }

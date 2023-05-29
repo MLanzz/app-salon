@@ -27,12 +27,16 @@ class LoginController {
     public static function createAccount(Router $router) {
         
         $user = new User();
+        $alerts = [];
         if($_SERVER["REQUEST_METHOD"] === "POST") {
             $user->sincronizar($_POST);
+
+            $alerts = $user->validateUser();
         } 
         
         $router->render("auth/createAccount", [
-            "user" => $user
+            "user" => $user,
+            "alerts" => $alerts
         ]);
     }
 }
