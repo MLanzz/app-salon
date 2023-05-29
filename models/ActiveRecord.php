@@ -90,14 +90,14 @@ class ActiveRecord {
     }
 
     // Registros - CRUD
-    public function guardar() {
+    public function save() {
         $resultado = '';
         if(!is_null($this->id)) {
             // actualizar
-            $resultado = $this->actualizar();
+            $resultado = $this->update();
         } else {
             // Creando un nuevo registro
-            $resultado = $this->crear();
+            $resultado = $this->create();
         }
         return $resultado;
     }
@@ -124,7 +124,7 @@ class ActiveRecord {
     }
 
     // crea un nuevo registro
-    public function crear() {
+    public function create() {
         // Sanitizar los datos
         $atributos = $this->sanitizarAtributos();
 
@@ -144,7 +144,7 @@ class ActiveRecord {
     }
 
     // Actualizar el registro
-    public function actualizar() {
+    public function update() {
         // Sanitizar los datos
         $atributos = $this->sanitizarAtributos();
 

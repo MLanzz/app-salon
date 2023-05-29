@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Classes\Email;
 use Model\User;
 use MVC\Router;
 
@@ -39,15 +40,42 @@ class LoginController {
                 if ($alreadyExist) {
                     $alerts = User::getAlerts();
                 } else {
-                    //No esta registrado
+                    // Hash password
+                    $user->hashPassword();
+
+                    // Crear token
+                    $user->createToken();
+
+                    // Enviamos el email del token
+                    $fullName = $user->firstName . " " . $user->lastName;
+                    $email = new Email($user->email, $fullName, $user->token);
+
+                    $email->sendEmail();
+
+                    // Creamos el usuario
+                    $result = $user->save();
+
+                    if ($result) {
+                        header("Location: /createAccountMessage");
+                    }
+
+                    // debuguear($user);
                 }
             }
 
-        } 
+        }
         
         $router->render("auth/createAccount", [
             "user" => $user,
             "alerts" => $alerts
         ]);
+    }
+
+    public static function confirmAccount(Router $router) {
+        $router->render("auth/confirmAccount", []);
+    }
+
+    public static function confirmAccountMessage(Router $router) {
+        $router->render("auth/confirmAccountMessage", []);
     }
 }
