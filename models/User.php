@@ -58,4 +58,19 @@ class User extends ActiveRecord {
 
         return self::$alerts;
     }
+
+    // Revisamos si el usuario ya existe
+    public function alreadyExist() {
+
+        $query = "SELECT * FROM users WHERE email = '" . self::$db->escape_string($this->email) . "' LIMIT 1";
+
+        $result = self::$db->query($query);
+
+        if ($result->num_rows) {
+            self::$alerts["errors"][] = "El e-mail ingresado ya esta esta registrado";
+        }
+
+        return $result->num_rows;
+
+    }
 }

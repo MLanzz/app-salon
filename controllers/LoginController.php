@@ -32,6 +32,17 @@ class LoginController {
             $user->sincronizar($_POST);
 
             $alerts = $user->validateUser();
+
+            if (empty($alerts)) {
+                $alreadyExist = $user->alreadyExist();
+
+                if ($alreadyExist) {
+                    $alerts = User::getAlerts();
+                } else {
+                    //No esta registrado
+                }
+            }
+
         } 
         
         $router->render("auth/createAccount", [
