@@ -8,7 +8,36 @@ use MVC\Router;
 
 class LoginController {
     public static function login(Router $router) {
-        $router->render("auth/login");
+
+        $alerts = [];
+
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $auth = new User($_POST);
+
+            $alerts = $auth->validateLogin();
+
+            if(!$alerts) {
+
+                $userExist = User::where("email", $auth->email);
+
+                if($userExist) {
+                    debuguear($userExist->isConfirmed);
+                    if($userExist->isConfirmed) {
+                        $login = $userExist->checkPassword($auth->password);
+                    } else {
+                        $alerts["errors"][] = "El usuario no esta confirmado";
+                    }
+                } else {
+                    $alerts["errors"][] = "Usuario no encontrado";
+                }
+
+                // $auth->login();
+            }
+        }
+
+        $router->render("auth/login", [
+            "alerts" => $alerts
+        ]);
     }
 
     public static function logout() {
@@ -56,7 +85,7 @@ class LoginController {
                     $result = $user->save();
 
                     if ($result) {
-                        header("Location: /createAccountMessage");
+                        header("Location: /confirmAccountMessage");
                     }
 
                     // debuguear($user);

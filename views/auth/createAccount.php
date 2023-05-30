@@ -2,7 +2,7 @@
 
 <p class="desc-page">Llena el siguiente formulario para crear una cuenta</p>
 
-<?php include_once __DIR__ . "/../templates/errors.php"; ?>
+<?php include_once __DIR__ . "/../templates/alerts.php"; ?>
 
 <form action="/createAccount" class="form" method="POST">
     <div class="field">

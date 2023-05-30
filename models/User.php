@@ -59,6 +59,18 @@ class User extends ActiveRecord {
         return self::$alerts;
     }
 
+    public function validateLogin() {
+        if(!$this->email) {
+            self::$alerts["errors"][] = "Ingrese un e-mail";
+        }
+
+        if(!$this->password) {
+            self::$alerts["errors"][] = "Ingrese su contraseña";
+        }
+
+        return self::$alerts;
+    }
+
     // Revisamos si el usuario ya existe
     public function alreadyExist() {
 
@@ -80,5 +92,11 @@ class User extends ActiveRecord {
 
     public function createToken() {
         $this->token = uniqid();
+    }
+
+    public function checkPassword($password) {
+        $result = password_verify($password, $this->password);
+
+        return $result;
     }
 }
