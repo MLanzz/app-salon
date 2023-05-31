@@ -86,9 +86,13 @@ class LoginController {
         ]);
     }
     
-    public static function resetPassword() {
+    public static function resetPassword(Router $router) {
+        $alerts = [];
         $token = s($_GET["token"]);
-        debuguear($token);
+
+        $router->render("auth/resetPassword", [
+            "alerts" => $alerts
+        ]);
     }
 
     public static function createAccount(Router $router) {
