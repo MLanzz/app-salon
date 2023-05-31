@@ -18,14 +18,26 @@ class LoginController {
 
             if(!$alerts) {
 
-                $userExist = User::where("email", $auth->email);
+                $user = User::where("email", $auth->email);
 
-                if($userExist) {
-                    debuguear($userExist->isConfirmed);
-                    if($userExist->isConfirmed) {
-                        $login = $userExist->checkPassword($auth->password);
+                if($user) {
+                    // Verificamos confirmación y contraseña
+                    if ($user->checkPasswordAndConfirmed($auth->password)) {
+                        // Iniciamos sesion
+                        // session_start();
+                        $_SESSION["id"] = $user->id;
+                        $_SESSION["fullName"] = $user->firstName . " " . $user->lastName;
+                        $_SESSION["email"] = $user->email;
+                        $_SESSION["login"] = true;
+                        
+                        if ($user->admin === "1") {
+                            $_SESSION["admin"] = $user->admin ?? null;
+                            header("Location: /admin");
+                        } else {
+                            header("Location: /appointments");
+                        }
                     } else {
-                        $alerts["errors"][] = "El usuario no esta confirmado";
+                        $alerts = $user->getAlerts();
                     }
                 } else {
                     $alerts["errors"][] = "Usuario no encontrado";

@@ -94,9 +94,17 @@ class User extends ActiveRecord {
         $this->token = uniqid();
     }
 
-    public function checkPassword($password) {
-        $result = password_verify($password, $this->password);
+    public function checkPasswordAndConfirmed($password) {
+        if (!password_verify($password, $this->password)) {
+            self::$alerts["errors"][] = "Contraseña incorrecta";
+            return false;
+        }
 
-        return $result;
+        if (!$this->isConfirmed) {
+            self::$alerts["errors"][] = "Usuario no confirmado";
+            return false;
+        }
+
+        return true;
     }
 }
