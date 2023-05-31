@@ -2,6 +2,8 @@
 
 <p class="desc-page">Ingrese su e-mail para restablecer su contraseña</p>
 
+<?php include_once __DIR__ . "/../templates/alerts.php"; ?>
+
 <form action="/forgotPassword" class="form" method="post">
 
 <div class="field">
@@ -11,7 +13,6 @@
             id="email"
             name="email"
             placeholder="Tu E-mail"
-            required
         />
     </div>
 

@@ -57,13 +57,38 @@ class LoginController {
     }
 
     public static function forgotPassword(Router $router) {
-        $router->render("auth/forgotPassword", [
 
+        $alerts = [];
+
+        if($_SERVER["REQUEST_METHOD"] === "POST") {
+            $auth = new User($_POST);
+
+            $user = User::where("email", $auth->email);
+
+            if (!$user || $user->isConfirmed === "0") {
+                $alerts["errors"][] = "Debe ingresar un e-mail registrado y confirmado";
+            } else {
+                $user->createToken();
+                $user->update();
+
+                $fullName = $user->firstName . " " . $user->lastName;
+                $email = new Email($user->email, $fullName, $user->token);
+
+                $email->sendResetPasswordEmail();
+
+                $alerts["success"][] = "El token para reestablecer la contraseña a sido enviado al e-mail indicado";
+
+            }
+        }
+
+        $router->render("auth/forgotPassword", [
+            "alerts" => $alerts
         ]);
     }
     
     public static function resetPassword() {
-        echo "Desde resetPassword";
+        $token = s($_GET["token"]);
+        debuguear($token);
     }
 
     public static function createAccount(Router $router) {
@@ -91,7 +116,7 @@ class LoginController {
                     $fullName = $user->firstName . " " . $user->lastName;
                     $email = new Email($user->email, $fullName, $user->token);
 
-                    $email->sendEmail();
+                    $email->sendConfirmationEmail();
 
                     // Creamos el usuario
                     $result = $user->save();
