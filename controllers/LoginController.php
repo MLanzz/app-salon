@@ -88,10 +88,43 @@ class LoginController {
     
     public static function resetPassword(Router $router) {
         $alerts = [];
+        $invalidToken = false;
         $token = s($_GET["token"]);
 
+        $user = User::where("token", $token);
+
+        if (!$user){
+            $invalidToken = true;
+            $alerts["errors"][] = "Token invalido";
+        }
+
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $newPassword = new User($_POST);
+
+            if(!$newPassword->password) {
+                $alerts["errors"][] = "La contraseña es obligatoria";
+            } elseif (strlen($newPassword->password) < 6) {
+                $alerts["errors"][] = "La contraseña debe tener un minimo de 6 caracteres";
+            }
+
+            if (!$alerts) {
+                $user->password = $newPassword->password;
+                $user->hashPassword();
+                $user->token = "";
+
+                $result = $user->update();
+
+                if($result) {
+                    header("Location: /");
+                }
+
+                
+            }
+        }
+
         $router->render("auth/resetPassword", [
-            "alerts" => $alerts
+            "alerts" => $alerts,
+            "invalidToken" => $invalidToken
         ]);
     }
 

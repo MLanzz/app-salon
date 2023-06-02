@@ -8,7 +8,10 @@
 
 <?php include_once __DIR__ . "/../templates/alerts.php"; ?>
 
-<form action="resetPassword" class="form" method="POST">
+<?php if ($invalidToken) {
+    return;
+} ?>
+<form class="form" method="POST">
     <div class="field">
         <label for="newPassword">Nueva contraseña</label>
         <input type="password" name="password" id="newPassword" placeholder="Nueva contraseña">
