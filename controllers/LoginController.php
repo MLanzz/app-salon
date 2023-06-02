@@ -42,8 +42,6 @@ class LoginController {
                 } else {
                     $alerts["errors"][] = "Usuario no encontrado";
                 }
-
-                // $auth->login();
             }
         }
 

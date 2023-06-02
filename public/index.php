@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../includes/app.php';
 
+use Controllers\AppointmentController;
 use Controllers\LoginController;
 use MVC\Router;
 
@@ -25,6 +26,9 @@ $router->post("/createAccount", [LoginController::class, "createAccount"]);
 // Confirmar cuenta
 $router->get("/confirmAccountMessage", [LoginController::class, "confirmAccountMessage"]);
 $router->get("/confirmAccount", [LoginController::class, "confirmAccount"]);
+
+// Paginas que necesitan autenticación
+$router->get("/appointments", [AppointmentController::class, "index"]);
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();
