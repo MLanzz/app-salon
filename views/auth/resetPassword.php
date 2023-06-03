@@ -17,5 +17,5 @@
         <input type="password" name="password" id="newPassword" placeholder="Nueva contraseña">
     </div>
 
-    <input type="submit" class="button-submit" value="Guardar nueva contraseña">
+    <input type="submit" class="button" value="Guardar nueva contraseña">
 </form>

@@ -63,7 +63,7 @@
         />
     </div>
 
-    <input type="submit" class="button-submit" value="Crear cuenta">
+    <input type="submit" class="button" value="Crear cuenta">
 
 </form>
 

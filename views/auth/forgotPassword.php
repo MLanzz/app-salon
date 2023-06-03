@@ -16,7 +16,7 @@
         />
     </div>
 
-    <input type="submit" class="button-submit" value="Enviar">
+    <input type="submit" class="button" value="Enviar">
 
 
 </form>
