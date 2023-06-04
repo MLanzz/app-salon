@@ -17,6 +17,10 @@
             <?php echo $contenido; ?>
         </div>
     </div>
-            
+       
+    <?php 
+    echo $script ?? null;
+    ?>
+
 </body>
 </html>

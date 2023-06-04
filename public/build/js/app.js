@@ -1,0 +1,1 @@
+let step=1;function initApp(){tabs()}function tabs(){document.querySelectorAll(".tabs button").forEach(t=>{t.addEventListener("click",(function(){step=parseInt(this.getAttribute("data-step"))}))})}document.addEventListener("DOMContentLoaded",()=>{initApp()});

@@ -1,3 +1,12 @@
+<?php 
+//Lógica para verificar si ya se esta logeado
+
+if(isset($_SESSION["login"])) {
+    header("Location: /appointments");
+}
+
+?>
+
 <h1 class="name-page">Login</h1>
 <p class="desc-page">Inicia sesión con tus datos</p>
 
