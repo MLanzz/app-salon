@@ -2,8 +2,6 @@
 
 namespace Model;
 
-use LengthException;
-
 class User extends ActiveRecord {
     // Base de datos
     protected static $table = "users";

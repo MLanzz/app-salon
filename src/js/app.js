@@ -1,14 +1,16 @@
+const serverUrl = "http://localhost:3001/" // local
+
 document.addEventListener("DOMContentLoaded", () => {
     initApp();
 });
 
 const initApp = () => {
-    // Lógica de cambio de tabs
-    tabs();
-    showSection(1);
-    paginationButtons();
-    nextPage();
-    previousPage();
+    tabs(); // Lógica de cambio de tabs
+    showSection(1); // Inicializamos la sección a mostrar
+    paginationButtons(); // Lógica para mostrar/ocultar los botones de la paginación
+    nextPage(); // Lógica para el boton "Siguiente" de la paginación
+    previousPage(); // Lógica para el boton "Anterior" de la paginación
+    consultAPI(); // Lógica para consultar la API PHP
 }
 
 const tabs = () => {
@@ -77,5 +79,46 @@ const previousPage = () => {
         let activeTab = parseInt(document.querySelector("button[class='active']").getAttribute("data-step"))
         showSection(--activeTab);
         paginationButtons();
+    })
+}
+
+const consultAPI = async () => {
+    try {
+        const url = `${serverUrl}api/services`;
+
+        const result = await fetch(url);
+
+        const services = await result.json();
+        
+        showServices(services);
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+const showServices = (services) => {
+    const servicesSection = document.querySelector("#services");
+
+    services.forEach(service => {
+        const { id, serviceName, price } = service;
+
+        const serviceContainer = document.createElement("DIV");
+        serviceContainer.classList.add("service");
+        serviceContainer.dataset.idService = id;
+
+        const pServiceName = document.createElement("P");
+        pServiceName.classList.add("service-name")
+        pServiceName.textContent = serviceName;
+        
+        const pPrice = document.createElement("P");
+        pPrice.classList.add("service-price")
+        pPrice.textContent = `$ ${price}`;
+
+        serviceContainer.appendChild(pServiceName);
+        serviceContainer.appendChild(pPrice);
+
+        servicesSection.appendChild(serviceContainer);
     })
 }
