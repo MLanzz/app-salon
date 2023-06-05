@@ -1,4 +1,4 @@
-const serverUrl = "http://localhost:3001/" // local
+import {serverUrl} from "./config.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     initApp();
