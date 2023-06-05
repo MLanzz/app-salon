@@ -1,7 +1,7 @@
 @use "base/variables" as v;
 @use "base/mixins" as m;
 
-.page-nav {
+.pagination {
     padding: v.$separacion 0;
     
     .button {
@@ -13,4 +13,8 @@
         display: flex;
         justify-content: space-between;
     }
+}
+
+.hide {
+    visibility: hidden;
 }

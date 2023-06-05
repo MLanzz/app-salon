@@ -45,7 +45,7 @@
         <p class="text-center">Verifica que la información sea correcta</p>
     </div>
 
-    <div class="page-nav">
+    <div class="pagination">
         <button id="previous" class="button">&laquo; Anterior</button>
         <button id="next" class="button">Siguiente &raquo;</button>
     </div>
