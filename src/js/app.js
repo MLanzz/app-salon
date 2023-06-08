@@ -1,5 +1,13 @@
 import {serverUrl} from "./config.js";
 
+
+const appointment =  {
+    fullName: "",
+    appointmentDate: "",
+    appointmentTime: "",
+    services: []
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     initApp();
 });
@@ -119,6 +127,18 @@ const showServices = (services) => {
         serviceContainer.appendChild(pServiceName);
         serviceContainer.appendChild(pPrice);
 
+        serviceContainer.onclick = function () {
+            selectService(service);
+        }
+
         servicesSection.appendChild(serviceContainer);
     })
+}
+
+const selectService = (service) => {
+    const {services} = appointment;
+
+    appointment.services = [...services, service];
+
+    console.log(appointment);
 }
