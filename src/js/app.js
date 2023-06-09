@@ -19,6 +19,7 @@ const initApp = () => {
     nextPage(); // Lógica para el boton "Siguiente" de la paginación
     previousPage(); // Lógica para el boton "Anterior" de la paginación
     consultAPI(); // Lógica para consultar la API PHP
+    getClientInfo() // Levantamos la información del cliente
 }
 
 const tabs = () => {
@@ -136,9 +137,64 @@ const showServices = (services) => {
 }
 
 const selectService = (service) => {
-    const {services} = appointment;
+    const { id } = service;
+    const { services } = appointment;
 
-    appointment.services = [...services, service];
+    if (services.some(actualService => actualService.id === id )) { // Se esta deseleccionando un servicio
+        appointment.services = services.filter(actualService => actualService.id !== id);
+    } else { // Se esta seleccionando un servicio
+        appointment.services = [...services, service];
+    }
 
-    console.log(appointment);
+    const serviceContainer = document.querySelector(`[data-id-service="${id}"]`);
+
+    serviceContainer.classList.toggle("serviceSelected");
+}
+
+function getClientInfo() {
+    appointment.fullName = document.querySelector("#fullName").value.trim();
+
+    const appointmentDate = document.querySelector("#appointmentDate")
+    appointmentDate.addEventListener("input", (e) => {
+        const day = new Date(e.target.value).getUTCDay();
+        if ([6,0].includes(day)) {
+            e.target.value = "";
+            showAlerts("Los fines de semana el salon se encuentra cerrado", "errors");
+        } else {
+            appointment.appointmentDate = e.target.value;
+        }
+    });
+
+    const appointmentTime = document.querySelector("#appointmentTime")
+    appointmentTime.addEventListener("input", (e) => {
+        const time = e.target.value.split(":");
+        
+        if ((time[0] < 10 || time[0] > 19) || (parseInt(time[0]) === 19 && time[1] > 0)) {
+            showAlerts("El salon se encuentra abierto de 10 a 19", "errors");
+        } else {
+            appointment.appointmentTime = e.target.value;
+        }
+    });
+
+
+}
+
+
+const showAlerts = (alertDesc, alertType) => {
+
+    if (!document.querySelector(".alert")) { // Solo dejamos que se cree una alerta
+
+        const alert = document.createElement("DIV");
+        alert.textContent = alertDesc;
+        alert.classList.add("alert");
+        alert.classList.add(alertType);
+    
+        const form = document.querySelector(".form");
+        form.prepend(alert);
+
+        setTimeout(() => {
+            alert.remove()
+        }, 3000);
+
+    }
 }

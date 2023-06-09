@@ -24,18 +24,18 @@
 
         <form class="form">
             <div class="field">
-                <label for="name">Nombre</label>
-                <input type="text" name="name" id="name" placeholder="Tu nombre" value="<?php echo $fullName ?>" readonly>
+                <label for="fullName">Nombre</label>
+                <input type="text" name="fullName" id="fullName" placeholder="Tu nombre" value="<?php echo $fullName ?>" readonly>
             </div>
 
             <div class="field">
-                <label for="date">Fecha</label>
-                <input type="date" name="appointmentDate" id="appointmentDate">
+                <label for="appointmentDate">Fecha</label>
+                <input type="date" name="appointmentDate" id="appointmentDate" min="<?php echo date("Y-m-d", strtotime("+1 day")) ?>">
             </div>
 
             <div class="field">
                 <label for="appointmentTime">Hora</label>
-                <input type="time" name="appointmentTime" id="appointmentTime">
+                <input type="time" name="appointmentTime" id="appointmentTime" max="15">
             </div>
         </form>
     </div>

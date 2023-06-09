@@ -41,5 +41,12 @@
             font-size: 3rem;
 
         }
+
+        &.serviceSelected {
+            background-color: v.$azul;
+            p {
+                color: v.$blanco;
+            }
+        }
     }
 }
