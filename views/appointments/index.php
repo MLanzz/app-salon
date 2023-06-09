@@ -43,6 +43,10 @@
     <div class="step-3 section">
         <h2>Resumen</h2>
         <p class="text-center">Verifica que la información sea correcta</p>
+
+        <div class="summary-content">
+            
+        </div>
     </div>
 
     <div class="pagination">

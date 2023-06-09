@@ -162,9 +162,8 @@ function getClientInfo() {
         if ([6,0].includes(day)) {
             e.target.value = "";
             showAlerts("Los fines de semana el salon se encuentra cerrado", "errors", ".form");
-        } else {
-            appointment.appointmentDate = e.target.value;
         }
+        appointment.appointmentDate = e.target.value;
     });
 
     const appointmentTime = document.querySelector("#appointmentTime")
@@ -174,9 +173,8 @@ function getClientInfo() {
         if ((time[0] < 10 || time[0] > 19) || (parseInt(time[0]) === 19 && time[1] > 0)) {
             e.target.value = "";
             showAlerts("El salon se encuentra abierto de 10 a 19", "errors", ".form");
-        } else {
-            appointment.appointmentTime = e.target.value;
         }
+        appointment.appointmentTime = e.target.value;
     });
 }
 
@@ -203,9 +201,35 @@ const showAlerts = (alertDesc, alertType, element, hide = true) => {
 }
 
 const showResume = () => {
-    if (Object.values(appointment).includes("") || appointment.services.length === 0) {
-        showAlerts("Hacen falta información o no se han seleccionado servicios", "errors", ".step-3", false);
-    } else {
-        console.log("todo bien");
+
+    const summaryContent = document.querySelector(".summary-content");
+
+    while(summaryContent.firstChild) { // Limpiamos el resumen cada vez que se entra en el tab
+        summaryContent.removeChild(summaryContent.firstChild);
     }
+
+    if (Object.values(appointment).includes("") || appointment.services.length === 0) {
+        showAlerts("Hacen falta información o no se han seleccionado servicios", "errors", ".summary-content", false);
+        return;
+    }
+
+    const {fullName, appointmentDate, appointmentTime, services} = appointment;
+
+    let summaryBody = `
+        <p><span>Nombre: </span>${fullName}</p>
+        <p><span>Fecha: </span>${appointmentDate}</p>
+        <p><span>Hora: </span>${appointmentTime}</p>
+    `;
+
+    services.forEach(service => {
+        const { id, serviceName, price } = service;
+        summaryBody += `
+            <div class="service-container">
+                <p>${serviceName} - <span>Precio: $ ${price}</span><p>
+            <div>
+        `;
+    });
+
+    summaryContent.innerHTML = summaryBody;
+
 }
