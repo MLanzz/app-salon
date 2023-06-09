@@ -216,17 +216,24 @@ const showResume = () => {
     const {fullName, appointmentDate, appointmentTime, services} = appointment;
 
     let summaryBody = `
-        <p><span>Nombre: </span>${fullName}</p>
-        <p><span>Fecha: </span>${appointmentDate}</p>
-        <p><span>Hora: </span>${appointmentTime}</p>
+        <h3>Información de la cita</h3> 
+        <div class="client-info-container">   
+            <p><span>Nombre: </span>${fullName}</p>
+            <p><span>Fecha: </span>${appointmentDate}</p>
+            <p><span>Hora: </span>${appointmentTime}</p>
+        </div>
     `;
 
-    services.forEach(service => {
+    // Header para los servicios
+    summaryBody += "<h3>Servicios seleccionados</h3>"
+
+    services.forEach(service => { // Iteramos y creamos HTML de los servicios
         const { id, serviceName, price } = service;
         summaryBody += `
-            <div class="service-container">
-                <p>${serviceName} - <span>Precio: $ ${price}</span><p>
-            <div>
+            <div class="service-info-container">
+                <p>${serviceName}</p>
+                <p><span>Precio: $ ${price}</span></p>
+            </div>
         `;
     });
 

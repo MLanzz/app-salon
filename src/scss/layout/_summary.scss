@@ -1,0 +1,23 @@
+@use "base/variables" as v;
+
+
+.summary-content {
+    p {
+        margin-bottom: 1rem;
+    }
+
+    span {
+        color: v.$azul;
+        font-weight: v.$bold;
+        font-size: 2.4rem;
+    }
+}
+
+.service-info-container {
+    padding: 3rem 0;
+    border-top: 1px solid v.$gris;
+}
+
+.client-info-container {
+    margin-bottom: v.$separacion;
+}
