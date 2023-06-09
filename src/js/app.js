@@ -20,6 +20,7 @@ const initApp = () => {
     previousPage(); // Lógica para el boton "Anterior" de la paginación
     consultAPI(); // Lógica para consultar la API PHP
     getClientInfo() // Levantamos la información del cliente
+    showResume();
 }
 
 const tabs = () => {
@@ -68,7 +69,9 @@ const paginationButtons = () => {
     }
 
     if (activeTab === 3) {
-        nextPage.classList.add("hide")
+        nextPage.classList.add("hide");
+        // Esto lo ejecutamos solo acá porque paginationButtons() se ejecuta tanto cuando usas los tabs como la paginación
+        showResume();
     }
 }
 
@@ -105,7 +108,6 @@ const consultAPI = async () => {
         console.log(error);
     }
 }
-
 
 const showServices = (services) => {
     const servicesSection = document.querySelector("#services");
@@ -159,7 +161,7 @@ function getClientInfo() {
         const day = new Date(e.target.value).getUTCDay();
         if ([6,0].includes(day)) {
             e.target.value = "";
-            showAlerts("Los fines de semana el salon se encuentra cerrado", "errors");
+            showAlerts("Los fines de semana el salon se encuentra cerrado", "errors", ".form");
         } else {
             appointment.appointmentDate = e.target.value;
         }
@@ -170,31 +172,40 @@ function getClientInfo() {
         const time = e.target.value.split(":");
         
         if ((time[0] < 10 || time[0] > 19) || (parseInt(time[0]) === 19 && time[1] > 0)) {
-            showAlerts("El salon se encuentra abierto de 10 a 19", "errors");
+            e.target.value = "";
+            showAlerts("El salon se encuentra abierto de 10 a 19", "errors", ".form");
         } else {
             appointment.appointmentTime = e.target.value;
         }
     });
-
-
 }
 
+// element es el elemento HTML al cual le vamos a hacer el prepend de las alertas
+const showAlerts = (alertDesc, alertType, element, hide = true) => {
 
-const showAlerts = (alertDesc, alertType) => {
+    if (document.querySelector(".alert")) { // Solo dejamos que se cree una alerta
+        document.querySelector(".alert").remove();
+    }
 
-    if (!document.querySelector(".alert")) { // Solo dejamos que se cree una alerta
+    const alert = document.createElement("DIV");
+    alert.textContent = alertDesc;
+    alert.classList.add("alert");
+    alert.classList.add(alertType);
 
-        const alert = document.createElement("DIV");
-        alert.textContent = alertDesc;
-        alert.classList.add("alert");
-        alert.classList.add(alertType);
-    
-        const form = document.querySelector(".form");
-        form.prepend(alert);
+    const referenceElement = document.querySelector(element);
+    referenceElement.prepend(alert);
 
+    if (hide) {
         setTimeout(() => {
             alert.remove()
         }, 3000);
+    }
+}
 
+const showResume = () => {
+    if (Object.values(appointment).includes("") || appointment.services.length === 0) {
+        showAlerts("Hacen falta información o no se han seleccionado servicios", "errors", ".step-3", false);
+    } else {
+        console.log("todo bien");
     }
 }
