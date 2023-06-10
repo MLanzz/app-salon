@@ -37,6 +37,8 @@
                 <label for="appointmentTime">Hora</label>
                 <input type="time" name="appointmentTime" id="appointmentTime" max="15">
             </div>
+
+            <input type="hidden" id="userId" name="userId" value="<?php echo $userId; ?>">
         </form>
     </div>
 

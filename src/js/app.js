@@ -2,6 +2,7 @@ import {serverUrl} from "./config.js";
 
 
 const appointment =  {
+    userId: "",
     fullName: "",
     appointmentDate: "",
     appointmentTime: "",
@@ -18,9 +19,9 @@ const initApp = () => {
     paginationButtons(); // Lógica para mostrar/ocultar los botones de la paginación
     nextPage(); // Lógica para el boton "Siguiente" de la paginación
     previousPage(); // Lógica para el boton "Anterior" de la paginación
-    consultAPI(); // Lógica para consultar la API PHP
+    getServices(); // Lógica para consultar la API PHP
     getClientInfo() // Levantamos la información del cliente
-    showResume();
+    showResume(); // Mostramos el tab de resumen
 }
 
 const tabs = () => {
@@ -94,7 +95,7 @@ const previousPage = () => {
     })
 }
 
-const consultAPI = async () => {
+const getServices = async () => {
     try {
         const url = `${serverUrl}api/services`;
 
@@ -155,6 +156,7 @@ const selectService = (service) => {
 
 function getClientInfo() {
     appointment.fullName = document.querySelector("#fullName").value.trim();
+    appointment.userId = document.querySelector("#userId").value;
 
     const appointmentDate = document.querySelector("#appointmentDate")
     appointmentDate.addEventListener("input", (e) => {
@@ -215,11 +217,24 @@ const showResume = () => {
 
     const {fullName, appointmentDate, appointmentTime, services} = appointment;
 
+    // Formateamos la fecha
+    const objDate = new Date(appointmentDate);
+    
+    const  dateOptions = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    }
+
+    const formattedDate = new Date(objDate.getFullYear(), objDate.getMonth(), objDate.getDate() + 1).toLocaleDateString("es-AR", dateOptions);
+
+
     let summaryBody = `
         <h3>Información de la cita</h3> 
         <div class="client-info-container">   
             <p><span>Nombre: </span>${fullName}</p>
-            <p><span>Fecha: </span>${appointmentDate}</p>
+            <p><span>Fecha: </span>${formattedDate}</p>
             <p><span>Hora: </span>${appointmentTime}</p>
         </div>
     `;
@@ -237,6 +252,37 @@ const showResume = () => {
         `;
     });
 
+    
     summaryContent.innerHTML = summaryBody;
+    
+    const makeAppointmentButton = document.createElement("BUTTON");
+    makeAppointmentButton.onclick = makeAppointment;
+    makeAppointmentButton.classList.add("button");
+    makeAppointmentButton.textContent = "Reservar cita";
+    summaryContent.append(makeAppointmentButton);
 
+}
+
+
+const makeAppointment = async () =>  {
+    const { userId, appointmentDate, appointmentTime, services } = appointment;
+
+    const servicesIds = services.map(service => service.id);
+
+    const postData = new FormData();
+    postData.append("userId", userId);
+    postData.append("appointmentDate", appointmentDate);
+    postData.append("appointmentTime", appointmentTime);
+    postData.append("servicesIds", servicesIds);
+
+    const url = `${serverUrl}/api/appointments`;
+
+    const response = await fetch(url, {
+        method: "POST",
+        body: postData
+    });
+
+    const data = await response.json();
+
+    console.log(data);
 }
