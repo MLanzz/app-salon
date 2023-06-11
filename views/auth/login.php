@@ -1,9 +1,4 @@
 <?php 
-//Lógica para verificar si ya se esta logeado
-
-if(isset($_SESSION["login"])) {
-    header("Location: /appointments");
-}
 
 ?>
 

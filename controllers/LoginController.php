@@ -9,6 +9,11 @@ use MVC\Router;
 class LoginController {
     public static function login(Router $router) {
 
+        //Lógica para verificar si ya se esta logeado
+        if(isset($_SESSION["login"])) {
+            header("Location: /appointments");
+        }
+
         $alerts = [];
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
