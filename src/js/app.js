@@ -154,7 +154,7 @@ const selectService = (service) => {
     serviceContainer.classList.toggle("serviceSelected");
 }
 
-function getClientInfo() {
+const getClientInfo = () => {
     appointment.fullName = document.querySelector("#fullName").value.trim();
     appointment.userId = document.querySelector("#userId").value;
 
@@ -277,12 +277,30 @@ const makeAppointment = async () =>  {
 
     const url = `${serverUrl}/api/appointments`;
 
-    const response = await fetch(url, {
-        method: "POST",
-        body: postData
-    });
 
-    const data = await response.json();
-
-    console.log(data);
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            body: postData
+        });
+    
+        const data = await response.json();
+    
+        if (data.result) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Cita creada',
+                text: '¡Cita agendada correctamente!'
+            }).then(() => {
+                window.location.reload();
+            }
+              )
+        }
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Ocurrió un error guardando la cita',
+          })
+    }
 }
