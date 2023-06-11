@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Model\Appointment;
+use Model\AppointmentService;
 use Model\Service;
 
 class APIController {
@@ -15,13 +16,25 @@ class APIController {
 
 
     public static function save() {
-        
-        $appointment = new Appointment($_POST);
-        
-        // $result = $appointment->save();
+
+        $appointment = new Appointment($_POST); 
+        $result = $appointment->save(); // Guardamos la cita
+        $appointmentId = $result["id"]; // Obtenemos el id de la cita insertado/guardado
+
+        $servicesIds = explode(",", $_POST["servicesIds"]);
+
+        foreach ($servicesIds as $serviceId) { // Recorremos los servicios y guardamos la relación con la cita
+            $appointmentService = new AppointmentService([
+                "serviceId" => $serviceId,
+                "appointmentId" => $appointmentId
+            ]);
+
+            $appointmentService->save();
+            
+        }
 
         $response = [
-            // "result" => $result,
+            "result" => $result,
             "appointment" => $appointment
         ];
 
