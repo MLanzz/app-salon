@@ -55,7 +55,7 @@
     <div class="field">
         <label for="password">Password</label>
         <input 
-            type="tel"
+            type="password"
             id="password"
             name="password"
             placeholder="Tu Password"
