@@ -1,11 +1,7 @@
 <h1 class="name-page">Crea una cita</h1>
 <p class="desc-page">Completa los datos para solicitar una cita</p>
 
-<div class="barra">
-    <p>Hola: <?php echo $fullName ?? ""; ?></p>
-
-    <a href="/logout" class="button">Cerrar sesión</a>
-</div>
+<?php include_once __DIR__ . "/../templates/userSection.php" ?>
 
 <div id="app">
 

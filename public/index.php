@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../includes/app.php';
 
+use Controllers\AdminController;
 use Controllers\APIController;
 use Controllers\AppointmentController;
 use Controllers\LoginController;
@@ -30,6 +31,9 @@ $router->get("/confirmAccount", [LoginController::class, "confirmAccount"]);
 
 // Paginas que necesitan autenticación
 $router->get("/appointments", [AppointmentController::class, "index"]);
+
+// Paginas solo para admins
+$router->get("/admin", [AdminController::class, "index"]);
 
 // API de citas
 $router->get("/api/services", [APIController::class, "index"]);
