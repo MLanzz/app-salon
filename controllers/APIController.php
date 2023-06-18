@@ -14,7 +14,6 @@ class APIController {
         
     }
 
-
     public static function save() {
 
         $appointment = new Appointment($_POST); 
@@ -38,6 +37,19 @@ class APIController {
             "appointment" => $appointment
         ];
 
+        echo json_encode($response);
+    }
+
+    public static function appointmentDetails() {
+
+        $appointmentId = $_POST["appointmentId"] ?? 0;
+
+        $appointmentServices = AppointmentService::whereAll("appointmentId", $appointmentId);
+
+        $response = [
+            "appointmentServices" => $appointmentServices
+        ];
+        
         echo json_encode($response);
     }
 }

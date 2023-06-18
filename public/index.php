@@ -38,6 +38,7 @@ $router->get("/admin", [AdminController::class, "index"]);
 // API de citas
 $router->get("/api/services", [APIController::class, "index"]);
 $router->post("/api/appointments", [APIController::class, "save"]);
+$router->post("/api/appointmentDetails", [APIController::class, "appointmentDetails"]);
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

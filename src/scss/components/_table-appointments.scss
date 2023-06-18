@@ -1,0 +1,23 @@
+@use "base/variables" as v;
+@use "base/mixins" as m;
+
+.table-appointments {
+    width: 100%;
+    text-align: center;
+    th, td {
+        border-bottom: .1rem solid v.$blanco;
+        padding: 2rem;
+    }
+
+    .arrow-icon {
+        cursor: pointer;
+        transition: transform .3s ease;
+        width: 3rem;
+        filter: invert(1);
+        transform: rotateZ(90deg);
+    }
+
+    .rotate {
+        transform: none;
+    }
+}

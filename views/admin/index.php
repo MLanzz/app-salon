@@ -12,15 +12,14 @@
     </form>
 </div>
 
-<div class="">
-    <table>
+<div class="admin-appointments">
+    <table class="table-appointments">
         <thead>
             <th>#</th>
             <th>Fecha</th>
             <th>Cliente</th>
             <th>E-mail</th>
-            <th>Servicio</th>
-            <th>Precio</th>
+            <th></th>
         </thead>
         <tbody>
             <?php foreach ($appointments as $appointment): ?>
@@ -29,10 +28,16 @@
                     <td><?php echo $appointment->appointmentDate ?></td>
                     <td><?php echo $appointment->fullName ?></td>
                     <td><?php echo $appointment->email ?></td>
-                    <td><?php echo $appointment->serviceName ?></td>
-                    <td><?php echo $appointment->price ?></td>
+                    <td><img class="arrow-icon" name="detailsButton" data-id-appointment="<?php echo $appointment->appointmentId ?>" src="build/img/arrow.webp" alt="arrow.png"></td>
                 </tr>
             <?php endforeach ?>
         </tbody>
     </table>
 </div>
+
+
+<?php 
+    $script = "
+        <script src='build/js/adminAppointment.js' type='module'></script>
+    ";
+?>

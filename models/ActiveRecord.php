@@ -123,6 +123,12 @@ class ActiveRecord {
         return array_shift( $resultado ) ;
     }
 
+    public static function whereAll($key, $value) {
+        $query = "SELECT * FROM " . static::$table  ." WHERE {$key} = '{$value}'";
+        $resultado = self::querySQL($query);
+        return $resultado;
+    }
+
     // Obtener Registros con cierta cantidad
     public static function get($limite) {
         $query = "SELECT * FROM " . static::$table . " LIMIT {$limite}";

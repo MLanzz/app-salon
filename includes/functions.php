@@ -19,3 +19,10 @@ function isAuth() : void {
         header("Location: /");
     }
 }
+
+// Revisar que el usuario este autenticado
+function isAdmin() : void {
+    if ($_SESSION["admin"] !== "1") {
+        header("Location: /appointments");
+    }
+}
