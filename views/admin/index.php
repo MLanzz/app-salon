@@ -19,6 +19,7 @@
             <th>Fecha</th>
             <th>Cliente</th>
             <th>E-mail</th>
+            <th>Total</th>
             <th></th>
         </thead>
         <tbody>
@@ -28,6 +29,7 @@
                     <td><?php echo $appointment->appointmentDate ?></td>
                     <td><?php echo $appointment->fullName ?></td>
                     <td><?php echo $appointment->email ?></td>
+                    <td>$ <?php echo $appointment->appointmentTotal ?></td>
                     <td><img class="arrow-icon" name="detailsButton" data-id-appointment="<?php echo $appointment->appointmentId ?>" src="build/img/arrow.webp" alt="arrow.png"></td>
                 </tr>
             <?php endforeach ?>

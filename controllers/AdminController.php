@@ -29,7 +29,8 @@ class AdminController {
             a.id AS appointmentId, 
             concat(a.appointmentDate, ' ', a.appointmentTime) AS appointmentDate, 
             CONCAT(u.firstName, ' ', u.lastName) AS fullName,
-            u.email
+            u.email,
+            a.appointmentTotal
         FROM appointments a 
         INNER JOIN users u
         ON u.id = a.userId ";

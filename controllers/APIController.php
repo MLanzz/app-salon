@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Model\Appointment;
 use Model\AppointmentService;
+use Model\appointmentDetails;
 use Model\Service;
 
 class APIController {
@@ -17,10 +18,19 @@ class APIController {
     public static function save() {
 
         $appointment = new Appointment($_POST); 
-        $result = $appointment->save(); // Guardamos la cita
-        $appointmentId = $result["id"]; // Obtenemos el id de la cita insertado/guardado
-
         $servicesIds = explode(",", $_POST["servicesIds"]);
+        
+        $appointmentTotal = 0;
+        foreach ($servicesIds as $serviceId) { // Recorremos los servicios y guardamos la relación con la cita
+            $service = Service::find($serviceId);
+
+            $appointmentTotal += $service->price;            
+        }
+        $appointment->appointmentTotal = $appointmentTotal;
+
+        $result = $appointment->save(); // Guardamos la cita
+        
+        $appointmentId = $result["id"]; // Obtenemos el id de la cita insertado/guardado
 
         foreach ($servicesIds as $serviceId) { // Recorremos los servicios y guardamos la relación con la cita
             $appointmentService = new AppointmentService([
@@ -58,7 +68,7 @@ class APIController {
             ORDER BY as2.id DESC
         ";
 
-        $appointmentServices = AppointmentService::querySQL($query);
+        $appointmentServices = appointmentDetails::querySQL($query);
 
         $response = [
             "appointmentServices" => $appointmentServices

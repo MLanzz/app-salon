@@ -101,7 +101,7 @@ const createServicesTables = (appointmentServices, appointmentId) => {
             <tr>
                 <td>${id}</td>
                 <td>${serviceName}</td>
-                <td>${price}</td>
+                <td>$ ${price}</td>
             </tr>
         `;
         

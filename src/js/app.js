@@ -275,7 +275,7 @@ const makeAppointment = async () =>  {
     postData.append("appointmentTime", appointmentTime);
     postData.append("servicesIds", servicesIds);
 
-    const url = `${serverUrl}/api/appointments`;
+    const url = `${serverUrl}api/appointments`;
 
 
     try {
