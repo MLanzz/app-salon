@@ -23,7 +23,7 @@
         </thead>
         <tbody>
             <?php foreach ($appointments as $appointment): ?>
-                <tr>
+                <tr appointmentId="<?php echo $appointment->appointmentId; ?>">
                     <td><?php echo $appointment->appointmentId ?></td>
                     <td><?php echo $appointment->appointmentDate ?></td>
                     <td><?php echo $appointment->fullName ?></td>

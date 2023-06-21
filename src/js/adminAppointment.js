@@ -13,17 +13,32 @@ const showAppointmentDetails = () => {
 
     detailsButtons.forEach(detailButton => {
         detailButton.addEventListener("click", (e) => {
+
             const arrowIcon = e.target;
             arrowIcon.classList.toggle("rotate");
             const appointmentId = arrowIcon.dataset.idAppointment;
-            getServices(appointmentId);
-        })
-        // console.log(detailButton.dataset.idAppointment);
-    })
+            if (arrowIcon.classList.contains("rotate")) {
+                showServices(appointmentId);
+            } else {
+                hideServices(appointmentId);
+            }
+        });
+    });
 }
 
-const getServices = async (appointmentId) => {
-    const url = `${serverUrl}/api/appointmentDetails`;
+const showServices = async (appointmentId) => {
+
+    // Si previamente ya se mostraron los servicios de la cita en cuestión
+    // No volvemos a hacer el llamado a la api
+    // Solo los volvemos a mostrar
+    if (document.querySelector(`[servicesAppointmentId="${appointmentId}"]`)) {
+        document.querySelector(`[servicesAppointmentId="${appointmentId}"]`).style.display = "table-row";
+        return;
+    }
+
+    displayLoading(appointmentId);
+
+    const url = `${serverUrl}api/appointmentDetails`;
     const postData = new FormData();
     postData.append("appointmentId", appointmentId);
 
@@ -37,13 +52,79 @@ const getServices = async (appointmentId) => {
 
         
         if(data.appointmentServices.length > 0) {
-            console.table(data.appointmentServices);
+            const {appointmentServices} = data;
+
+            document.querySelector(".trLoading").remove();
+            createServicesTables(appointmentServices, appointmentId);
+            
+
+
         } else {
-            console.log("No hay servicios")
+            console.log("No hay servicios");
         }
         
     } catch (error) {
         console.error(error);
     }
+}
 
+const hideServices = (appointmentId) => {
+    document.querySelector(`[servicesAppointmentId="${appointmentId}"]`).style.display = "none";
+}
+
+const createServicesTables = (appointmentServices, appointmentId) => {
+
+    let serviceTable = `
+        <tr servicesAppointmentId="${appointmentId}">
+            <td></td>
+            <td colspan="3" style="padding: 0;">
+                <table style="width: 100%;">
+                    <thead>
+                        <th>#</th>
+                        <th>Servicio</th>
+                        <th>Precio</th>
+                    </thead>
+                    <tbody>
+                        #servicesRows
+                    </tbody>
+                </table>
+            </td>
+            <td></td>
+        </tr>
+    `;
+
+    let serviceTableBody = "";
+    appointmentServices.forEach(service => {
+        const { id, serviceName, price } = service;
+
+        serviceTableBody += `
+            <tr>
+                <td>${id}</td>
+                <td>${serviceName}</td>
+                <td>${price}</td>
+            </tr>
+        `;
+        
+    });
+    
+    serviceTable = serviceTable.replace("#servicesRows", serviceTableBody);
+
+    const trAppointment = document.querySelector(`[appointmentId='${appointmentId}']`);
+
+    trAppointment.insertAdjacentHTML("afterend", serviceTable);
+
+}
+
+const displayLoading = (appointmentId) => {
+    const trAppointment = document.querySelector(`[appointmentId='${appointmentId}']`);
+
+    const loading = `
+        <tr class="trLoading">
+            <td colspan="5">
+                <div class="loading"></div>
+            </td>
+        </tr>
+    `;
+
+    trAppointment.insertAdjacentHTML("afterend", loading);
 }

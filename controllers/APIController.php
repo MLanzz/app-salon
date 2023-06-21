@@ -44,7 +44,21 @@ class APIController {
 
         $appointmentId = $_POST["appointmentId"] ?? 0;
 
-        $appointmentServices = AppointmentService::whereAll("appointmentId", $appointmentId);
+        $query = "
+            SELECT
+                as2.id,
+                as2.appointmentId,
+                as2.serviceId,
+                s.serviceName,
+                s.price
+            FROM appointmentsServices as2 
+            INNER JOIN services s
+            on s.id = as2.serviceId
+            WHERE as2.appointmentId = {$appointmentId}
+            ORDER BY as2.id DESC
+        ";
+
+        $appointmentServices = AppointmentService::querySQL($query);
 
         $response = [
             "appointmentServices" => $appointmentServices
