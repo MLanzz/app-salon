@@ -77,8 +77,8 @@ const createServicesTables = (appointmentServices, appointmentId) => {
     let serviceTable = `
         <tr servicesAppointmentId="${appointmentId}">
             <td></td>
-            <td colspan="3" style="padding: 0;">
-                <table style="width: 100%;">
+            <td colspan="3" style="padding: 0 0 1rem 0;">
+                <table style="width: 100%;" cellspacing="0">
                     <thead>
                         <th>#</th>
                         <th>Servicio</th>
@@ -89,6 +89,7 @@ const createServicesTables = (appointmentServices, appointmentId) => {
                     </tbody>
                 </table>
             </td>
+            <td></td>
             <td></td>
         </tr>
     `;
@@ -120,7 +121,7 @@ const displayLoading = (appointmentId) => {
 
     const loading = `
         <tr class="trLoading">
-            <td colspan="5">
+            <td colspan="6">
                 <div class="loading"></div>
             </td>
         </tr>

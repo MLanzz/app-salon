@@ -34,6 +34,7 @@ $router->get("/appointments", [AppointmentController::class, "index"]);
 
 // Paginas solo para admins
 $router->get("/admin", [AdminController::class, "index"]);
+$router->post("/admin", [AdminController::class, "index"]);
 
 // API de citas
 $router->get("/api/services", [APIController::class, "index"]);

@@ -21,7 +21,7 @@ class APIController {
         $servicesIds = explode(",", $_POST["servicesIds"]);
         
         $appointmentTotal = 0;
-        foreach ($servicesIds as $serviceId) { // Recorremos los servicios y guardamos la relación con la cita
+        foreach ($servicesIds as $serviceId) { // Recorremos los servicios y seteamos el monto total de la cita
             $service = Service::find($serviceId);
 
             $appointmentTotal += $service->price;            
