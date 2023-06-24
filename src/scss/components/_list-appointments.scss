@@ -1,0 +1,22 @@
+@use "base/variables" as v;
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    li {
+        margin: 1rem 0;
+    }
+
+    span {
+        color: v.$azul;
+        font-weight: v.$bold;
+    }
+}
+
+.admin-appointments {
+    .service-desc {
+        font-size: 1.6rem;
+    }
+}

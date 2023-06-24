@@ -3,6 +3,18 @@
 
 .form {
     width: 100%;
+    
+    fieldset {
+        border-radius: 1rem;
+
+        legend {
+            margin-left: 1rem;
+        }
+
+        .field:last-of-type {
+            margin-bottom: 0;
+        }
+    }
 }
 
 .field {
