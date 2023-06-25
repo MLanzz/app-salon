@@ -9,6 +9,7 @@
     }
 
     .image {
+        margin-top: 4.5rem;
         height: 20rem;
         background-image: url(../img/1.jpg);
         background-size: cover;
@@ -16,6 +17,7 @@
 
         @include m.tablet {
             height: auto;
+            margin-top: 0;
         }
     }
 
@@ -29,17 +31,78 @@
     }   
 }
 
-.barra {
-    margin: v.$separacion 0;
+.nav-bar-desktop {
+    display: none;
+}
 
-    @include m.tablet {
+@include m.tablet {
+    .nav-bar-desktop {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+    }
+
+    .icon-menu {
+        display: none;
     }
 
     .button {
         @include m.boton(v.$negro, v.$blanco);
+        margin: 0;
+    }
+}
+
+.nav-bar-mobile {
+    @include m.tablet {
+        display: none;
+    }
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: v.$negro;
+
+    p {
+        margin: 0 1rem 0 0 ;
+    }
+}
+
+.icon-menu {
+    width: 3rem;
+    filter: invert(1);
+    margin-left: 2rem;
+}
+
+.side-nav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    display: flex;
+    flex-direction: column;
+
+    a {
+        text-decoration: none;
+        color: v.$blanco;
+        margin: 2rem 0 0 2rem;
+        font-size: 3rem;
+    }
+
+    a:first-child {
+        display: flex;
+        align-items: center;
+        height: 4.5rem;
         margin: 0;
     }
 }

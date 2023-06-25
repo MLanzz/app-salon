@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",()=>{initSideNav()});const initSideNav=()=>{document.querySelector(".open-menu-btn").addEventListener("click",openNav),document.querySelector(".close-menu-btn").addEventListener("click",closeNav)},openNav=()=>{document.querySelector(".side-nav").style.width="250px"},closeNav=()=>{document.querySelector(".side-nav").style.width="0"};

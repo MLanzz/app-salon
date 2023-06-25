@@ -1,5 +1,5 @@
+<?php include_once __DIR__ . "/../templates/navBar.php" ?>
 <h1 class="name-page">Panel de administración</h1>
-<?php include_once __DIR__ . "/../templates/userSection.php" ?>
 
 <div>
     <form class="form" action="/admin" method="POST">
@@ -34,8 +34,9 @@
             $lastAppointmentId = 0;
             foreach ($appointments as $appointment): 
                 if ($lastAppointmentId != $appointment->appointmentId): 
+                    echo ($lastAppointmentId) === 0 ? "" : "<hr>";
                     $lastAppointmentId = $appointment->appointmentId; ?>
-                    <hr>
+                    
                     <ul>
                         
                         <li>
@@ -100,5 +101,6 @@
 <?php 
     $script = "
         <script src='build/js/adminAppointment.js' type='module'></script>
+        <script src='build/js/sideNav.js'></script>
     ";
 ?>
