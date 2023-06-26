@@ -40,6 +40,7 @@ $router->post("/admin", [AdminController::class, "index"]);
 $router->get("/api/services", [APIController::class, "index"]);
 $router->post("/api/appointments", [APIController::class, "save"]);
 $router->post("/api/appointmentDetails", [APIController::class, "appointmentDetails"]);
+$router->post("/api/deleteAppointment", [APIController::class, "delete"]);
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

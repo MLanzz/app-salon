@@ -17,6 +17,13 @@
         transform: rotateZ(90deg);
     }
 
+    .action-icon {
+        cursor: pointer;
+        width: 2rem;
+        filter: invert(1);
+    }
+
+
     .rotate {
         transform: none;
     }

@@ -76,4 +76,23 @@ class APIController {
         
         echo json_encode($response);
     }
+
+    public static function delete() {
+        $appointmentId = $_POST["appointmentId"];
+        $appointment = Appointment::find($appointmentId);
+
+        $appointmentServices = AppointmentService::whereAll("appointmentId", $appointment->id);
+
+        foreach ($appointmentServices as $appointmentService) {
+            $appointmentService->delete();
+        }
+
+        $result = $appointment->delete();
+
+        $response = [
+            "result" => $result
+        ];
+
+        echo json_encode($response);
+    }
 }

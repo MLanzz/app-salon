@@ -1,5 +1,5 @@
 <div class="nav-bar-desktop">
-    <p>Hola: <?php echo $fullName ?? ""; ?></p>
+    <p><img class="user-icon" src="build/img/user-icon.svg" alt=""> <?php echo $fullName ?? ""; ?></p>
     
     <a href="/logout" class="button">Cerrar sesión</a>
 

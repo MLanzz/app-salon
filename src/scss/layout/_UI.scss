@@ -40,7 +40,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-
+        height: 4rem;
     }
 
     .icon-menu {
@@ -50,6 +50,12 @@
     .button {
         @include m.boton(v.$negro, v.$blanco);
         margin: 0;
+    }
+
+    p {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 
@@ -73,10 +79,14 @@
     }
 }
 
-.icon-menu {
+.icon-menu, .user-icon {
     width: 3rem;
     filter: invert(1);
     margin-left: 2rem;
+}
+
+.user-icon {
+    margin-right: 1rem;
 }
 
 .side-nav {
