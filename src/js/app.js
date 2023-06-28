@@ -293,14 +293,13 @@ const makeAppointment = async () =>  {
                 text: '¡Cita agendada correctamente!'
             }).then(() => {
                 window.location.reload();
-            }
-              )
+            });
         }
     } catch (error) {
         Swal.fire({
             icon: 'error',
             title: 'Error',
             text: 'Ocurrió un error guardando la cita',
-          })
+        });
     }
 }

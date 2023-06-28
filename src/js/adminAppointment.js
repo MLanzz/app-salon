@@ -5,10 +5,11 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 const initApp = () => {
-    showAppointmentDetails();
+    setDetailsButtons();
+    setDeleteButtons();
 }
 
-const showAppointmentDetails = () => {
+const setDetailsButtons = () => {
     const detailsButtons = document.querySelectorAll("[name='detailsButton']");
 
     detailsButtons.forEach(detailButton => {
@@ -18,7 +19,7 @@ const showAppointmentDetails = () => {
             arrowIcon.classList.toggle("rotate");
             const appointmentId = arrowIcon.dataset.idAppointment;
             if (arrowIcon.classList.contains("rotate")) {
-                showServices(appointmentId);
+                showAppointmentDetails(appointmentId);
             } else {
                 hideServices(appointmentId);
             }
@@ -26,7 +27,19 @@ const showAppointmentDetails = () => {
     });
 }
 
-const showServices = async (appointmentId) => {
+const setDeleteButtons = () => {
+    const deleteButtons = document.querySelectorAll("[name='deleteButton']");
+
+    deleteButtons.forEach(deleteButton => {
+        deleteButton.addEventListener("click", (e) => {
+            const appointmentId = e.target.getAttribute("appointmentId");
+            showDeleteDialog(appointmentId);
+        });
+    });
+}
+
+
+const showAppointmentDetails = async (appointmentId) => {
 
     // Si previamente ya se mostraron los servicios de la cita en cuestión
     // No volvemos a hacer el llamado a la api
@@ -54,6 +67,7 @@ const showServices = async (appointmentId) => {
         if(data.appointmentServices.length > 0) {
             const {appointmentServices} = data;
 
+            // Removemos el div con loading
             document.querySelector(".trLoading").remove();
             createServicesTables(appointmentServices, appointmentId);
             
@@ -128,4 +142,50 @@ const displayLoading = (appointmentId) => {
     `;
 
     trAppointment.insertAdjacentHTML("afterend", loading);
+}
+
+const showDeleteDialog = (appointmentId) => {
+    Swal.fire({
+        title: `¿Desea borrar la cita #${appointmentId}?`,
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Eliminar'
+    }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            deleteAppointment(appointmentId)
+        }
+    });
+}
+
+const deleteAppointment = async (appointmentId) => {
+    const url = `${serverUrl}api/deleteAppointment`;
+    const postData = new FormData();
+    postData.append("appointmentId", appointmentId);
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            body: postData
+        });
+    
+        const data = await response.json();
+    
+        if (data.result) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Cita eliminada',
+                text: '¡Cita eliminada correctamente!'
+            }).then(() => {
+                window.location.reload();
+            });
+        }
+        
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Ocurrió un error elimiando la cita',
+        });
+    }
 }

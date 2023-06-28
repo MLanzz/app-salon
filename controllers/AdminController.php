@@ -22,7 +22,7 @@ class AdminController {
         if (isMobile()) {
             $query = "SELECT  
                         a.id AS appointmentId, 
-                        concat(a.appointmentDate, ' ', a.appointmentTime) AS appointmentDate, 
+                        CONCAT(DATE_FORMAT(a.appointmentDate, '%d/%m/%Y'), ' ', a.appointmentTime) AS appointmentDate, 
                         CONCAT(u.firstName, ' ', u.lastName) AS fullName,
                         u.email,
                         a.appointmentTotal,
@@ -39,7 +39,7 @@ class AdminController {
         } else {
             $query = "SELECT  
                 a.id AS appointmentId, 
-                concat(a.appointmentDate, ' ', a.appointmentTime) AS appointmentDate, 
+                CONCAT(DATE_FORMAT(a.appointmentDate, '%d/%m/%Y'), ' ', a.appointmentTime) AS appointmentDate, 
                 CONCAT(u.firstName, ' ', u.lastName) AS fullName,
                 u.email,
                 a.appointmentTotal
