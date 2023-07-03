@@ -9,13 +9,13 @@
     }
 
     .image {
-        margin-top: 4.5rem;
         height: 20rem;
         background-image: url(../img/1.jpg);
         background-size: cover;
         background-position: center;
-
+        
         @include m.tablet {
+            margin-top: 4.5rem;
             height: auto;
             margin-top: 0;
         }
