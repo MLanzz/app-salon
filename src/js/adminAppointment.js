@@ -51,7 +51,7 @@ const showAppointmentDetails = async (appointmentId) => {
 
     displayLoading(appointmentId);
 
-    const url = `${serverUrl}api/appointmentDetails`;
+    const url = `/api/appointmentDetails`;
     const postData = new FormData();
     postData.append("appointmentId", appointmentId);
 
@@ -159,7 +159,7 @@ const showDeleteDialog = (appointmentId) => {
 }
 
 const deleteAppointment = async (appointmentId) => {
-    const url = `${serverUrl}api/deleteAppointment`;
+    const url = `/api/deleteAppointment`;
     const postData = new FormData();
     postData.append("appointmentId", appointmentId);
 

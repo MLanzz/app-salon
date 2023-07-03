@@ -1,7 +1,7 @@
+<?php include_once __DIR__ . "/../templates/navBar.php" ?>
+
 <h1 class="name-page">Crea una cita</h1>
 <p class="desc-page">Completa los datos para solicitar una cita</p>
-
-<?php include_once __DIR__ . "/../templates/navBar.php" ?>
 
 <div id="app">
 
