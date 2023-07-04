@@ -147,12 +147,12 @@ const showDeleteDialog = (appointmentId) => {
         title: `¿Desea borrar la cita #${appointmentId}?`,
         showCancelButton: true,
         cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Eliminar'
-    }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-            deleteAppointment(appointmentId)
-        }
+        confirmButtonText: 'Eliminar',
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+            return deleteAppointment(appointmentId); 
+        },
+        allowOutsideClick: false
     });
 }
 

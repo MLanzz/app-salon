@@ -96,7 +96,7 @@
                             <td><?php echo $appointment->fullName ?></td>
                             <td><?php echo $appointment->email ?></td>
                             <td>$ <?php echo $appointment->appointmentTotal ?></td>
-                            <td><img class="action-icon" src="build/img/trash-icon.svg" alt="trash-icon.svg"></td>
+                            <td><img class="action-icon" name="deleteButton" appointmentId="<?php echo $appointment->appointmentId; ?>" src="build/img/trash-icon.svg" alt="trash-icon.svg"></td>
                             <td><img class="arrow-icon" name="detailsButton" data-id-appointment="<?php echo $appointment->appointmentId ?>" src="build/img/arrow.webp" alt="arrow.png"></td>
                         </tr>
                     <?php endforeach ?>
