@@ -9,7 +9,8 @@
 </head>
 <body>
     <div class="container-app">
-        <div class="image">
+        <?php $currentUrl = $_SERVER['REQUEST_URI'] === "" ? '/' : $_SERVER['REQUEST_URI']; ?>
+        <div class="image <?php echo $currentUrl === "/" ? "no-margin" : ""; ?>">
 
         </div>
 

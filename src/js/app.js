@@ -1,6 +1,3 @@
-import {serverUrl} from "./config.js";
-
-
 const appointment =  {
     userId: "",
     fullName: "",

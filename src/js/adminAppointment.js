@@ -1,5 +1,3 @@
-import {serverUrl} from "./config.js";
-
 document.addEventListener("DOMContentLoaded", () => {
     initApp();
 })

@@ -9,10 +9,9 @@
     <a>
         <img class="icon-menu close-menu-btn" src="build/img/close-menu-icon.svg" alt="">
     </a>
-    <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Clients</a>
-    <a href="#">Contact</a>
+    <a href="/admin">Citas</a>
+    <a href="/appointments">Sacar cita</a>
+    <a href="/logout">Cerrar sesión</a>
 </div>
 
 <div class="nav-bar-mobile">
