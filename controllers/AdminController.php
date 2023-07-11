@@ -68,6 +68,7 @@ class AdminController {
 
         $router->render("admin/index", [
             "fullName" => $_SESSION["fullName"],
+            "email" => $_SESSION["email"],
             "appointments" => $appointments,
             "appointmentDate" => $appointmentDate,
             "appointmentId" => $appointmentId ?? "",

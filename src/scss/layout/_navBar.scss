@@ -1,0 +1,141 @@
+@use "base/variables" as v;
+@use "base/mixins" as m;
+
+.nav-bar-desktop {
+    display: none;
+}
+
+@include m.tablet {
+    .nav-bar-desktop {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        background-color: v.$bgNavBarDesktop;
+        border-radius: 1rem;
+
+        .first-item {
+            border-radius: 1rem 0 0 1rem;
+        }
+
+        a {
+            text-decoration: none;
+            padding: 2rem;
+            color: v.$blanco;
+            font-weight: v.$bold;
+            transition: all .2s ease;
+    
+            &.activePage {
+                color: v.$negro;
+                background-color: v.$gris;
+            }
+    
+            &:hover {
+                color: v.$negro;
+                background-color: v.$gris;  
+            }
+        }
+    }
+
+    .user-profile-dropdown {
+        display: block;
+        margin-left: auto;
+        width: 16rem;
+        text-align: center;
+        transition: all .3s ease;
+        
+    
+        .user-profile-dropdown-content {
+            transition: all .3s ease;
+            min-width: 16rem;
+            display: none;
+            position: absolute;
+            text-align: center;
+            background-color: v.$blanco;
+            
+            a {
+                &.user-profile-dropdown-item {
+                    display: block;
+                    color: v.$negro;
+                    padding: 2rem 0;
+                }
+            }
+        }
+    
+        &:hover {
+            .user-profile-dropdown-content {
+                display: block;
+                
+            }
+            background-color: v.$blanco;
+            border-radius: 0 1rem 0 0;
+            p {
+                color: v.$negro;
+            }
+
+        }
+    }
+}
+
+
+.nav-bar-mobile {
+    @include m.tablet {
+        
+        .icon-menu {
+            display: none;
+        }
+
+        display: none;
+    }
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: v.$negro;
+
+    p {
+        margin: 0 1rem 0 0 ;
+    }
+}
+
+.icon-menu, .user-icon {
+    width: 3rem;
+    filter: invert(1);
+    margin-left: 2rem;
+}
+
+.user-icon {
+    margin-right: 1rem;
+}
+
+.side-nav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    display: flex;
+    flex-direction: column;
+
+    a {
+        text-decoration: none;
+        color: v.$blanco;
+        margin: 2rem 0 0 2rem;
+        font-size: 3rem;
+    }
+
+    a:first-child {
+        display: flex;
+        align-items: center;
+        height: 4.5rem;
+        margin: 0;
+    }
+}

@@ -6,7 +6,7 @@
 <div id="app">
 
     <nav class="tabs">
-        <button class="active" data-step="1">Servicios</button>
+        <button data-step="1">Servicios</button>
         <button data-step="2">Información cita</button>
         <button data-step="3">Resumen</button>
     </nav>
