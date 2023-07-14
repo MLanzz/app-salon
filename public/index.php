@@ -6,6 +6,7 @@ use Controllers\AdminController;
 use Controllers\APIController;
 use Controllers\AppointmentController;
 use Controllers\LoginController;
+use Controllers\ServiceController;
 use MVC\Router;
 
 $router = new Router();
@@ -36,11 +37,20 @@ $router->get("/appointments", [AppointmentController::class, "index"]);
 $router->get("/admin", [AdminController::class, "index"]);
 $router->post("/admin", [AdminController::class, "index"]);
 
+// Servicios
+$router->get("/services", [ServiceController::class, "index"]);
+
+
 // API de citas
-$router->get("/api/services", [APIController::class, "index"]);
-$router->post("/api/appointments", [APIController::class, "save"]);
-$router->post("/api/appointmentDetails", [APIController::class, "appointmentDetails"]);
-$router->post("/api/deleteAppointment", [APIController::class, "delete"]);
+$router->get("/api/getServices", [APIController::class, "getServices"]); // Listado de servicios
+$router->post("/api/saveAppointment", [APIController::class, "saveAppointment"]); // Guardado de cita
+$router->post("/api/getAppointmentDetails", [APIController::class, "getAppointmentDetails"]); // Detalles de una cita
+$router->post("/api/deleteAppointment", [APIController::class, "deleteAppointment"]); // Borrado de una cita
+
+$router->post("/api/saveService", [APIController::class, "saveService"]); // Guardado (creación/borrado) de un servicio
+$router->post("/api/deleteService", [APIController::class, "deleteService"]); // Borrado de una cita
+
+
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

@@ -8,14 +8,14 @@ use Model\appointmentDetails;
 use Model\Service;
 
 class APIController {
-    public static function index() {
+    public static function getServices() {
         $services = Service::all();
 
         echo json_encode($services);
         
     }
 
-    public static function save() {
+    public static function saveAppointment() {
 
         $appointment = new Appointment($_POST); 
         $servicesIds = explode(",", $_POST["servicesIds"]);
@@ -50,7 +50,7 @@ class APIController {
         echo json_encode($response);
     }
 
-    public static function appointmentDetails() {
+    public static function getAppointmentDetails() {
 
         $appointmentId = $_POST["appointmentId"] ?? 0;
 
@@ -77,7 +77,7 @@ class APIController {
         echo json_encode($response);
     }
 
-    public static function delete() {
+    public static function deleteAppointment() {
         $appointmentId = $_POST["appointmentId"];
         $appointment = Appointment::find($appointmentId);
 
@@ -88,6 +88,31 @@ class APIController {
         }
 
         $result = $appointment->delete();
+
+        $response = [
+            "result" => $result
+        ];
+
+        echo json_encode($response);
+    }
+
+    public static function saveService() {
+        $service = new Service($_POST);
+
+        $result = $service->save();
+
+        $response = [
+            "result" => $result,
+            "service" => $service
+        ];
+
+        echo json_encode($response);
+    }
+
+    public static function deleteService() {
+        $service = new Service($_POST);
+
+        $result = $service->delete();
 
         $response = [
             "result" => $result

@@ -49,7 +49,7 @@ const showAppointmentDetails = async (appointmentId) => {
 
     displayLoading(appointmentId);
 
-    const url = `/api/appointmentDetails`;
+    const url = `/api/getAppointmentDetails`;
     const postData = new FormData();
     postData.append("appointmentId", appointmentId);
 

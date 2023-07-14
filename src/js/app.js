@@ -94,7 +94,7 @@ const previousPage = () => {
 
 const getServices = async () => {
     try {
-        const url = `/api/services`;
+        const url = `/api/getServices`;
 
         const result = await fetch(url);
 
@@ -272,7 +272,7 @@ const makeAppointment = async () =>  {
     postData.append("appointmentTime", appointmentTime);
     postData.append("servicesIds", servicesIds);
 
-    const url = `/api/appointments`;
+    const url = `/api/saveAppointment`;
 
 
     try {

@@ -6,6 +6,7 @@
     
     <?php if($_SESSION["admin"] === "1"): ?>
         <a href="/admin" class="nav-bar-desktop-item <?php echo ($currentUrl === "/admin") ? "activePage" : ""; ?>">Panel de administración</a>
+        <a href="/services" class="nav-bar-desktop-item <?php echo ($currentUrl === "/services") ? "activePage" : ""; ?>">Servicios</a>
     <?php endif; ?>
     
     <div class="nav-bar-desktop-item user-profile-dropdown">

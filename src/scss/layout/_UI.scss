@@ -25,6 +25,12 @@
         margin: 0;
     }
 
+    .align-right {
+        @include m.tablet {
+            margin-left: auto;
+        }
+    }
+
     .app {
         width: 100%;
         margin: 0 auto;
