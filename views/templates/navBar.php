@@ -2,9 +2,12 @@
 
     <?php $currentUrl = $_SERVER['REQUEST_URI'] === "" ? '/' : $_SERVER['REQUEST_URI']; ?>
 
-    <a href="/admin" class="nav-bar-desktop-item first-item <?php echo ($currentUrl === "/admin") ? "activePage" : ""; ?>">Panel de administración</a>
-    <a href="/appointments" class="nav-bar-desktop-item <?php echo ($currentUrl === "/appointments") ? "activePage" : ""; ?>">Citas</a>
-    <!-- <a href="/logout" class="nav-bar-desktop-item">Cerrar sesión</a> -->
+    <a href="/appointments" class="nav-bar-desktop-item first-item <?php echo ($currentUrl === "/appointments") ? "activePage" : ""; ?>">Citas</a>
+    
+    <?php if($_SESSION["admin"] === "1"): ?>
+        <a href="/admin" class="nav-bar-desktop-item <?php echo ($currentUrl === "/admin") ? "activePage" : ""; ?>">Panel de administración</a>
+    <?php endif; ?>
+    
     <div class="nav-bar-desktop-item user-profile-dropdown">
         <p id="user-profile"><?php echo $fullName ?? ""; ?></p>
         <div class="user-profile-dropdown-content">
@@ -21,7 +24,9 @@
     <a>
         <img class="icon-menu close-menu-btn" src="build/img/close-menu-icon.svg" alt="">
     </a>
-    <a href="/admin">Citas</a>
+    <?php if($_SESSION["admin"] === "1"): ?>
+        <a href="/admin">Citas</a>
+    <?php endif; ?>
     <a href="/appointments">Sacar cita</a>
     <a href="/logout">Cerrar sesión</a>
 </div>
