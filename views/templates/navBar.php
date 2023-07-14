@@ -29,6 +29,7 @@
         <a href="/admin">Citas</a>
     <?php endif; ?>
     <a href="/appointments">Sacar cita</a>
+    <a href="/services">Servicios</a>
     <a href="/logout">Cerrar sesión</a>
 </div>
 

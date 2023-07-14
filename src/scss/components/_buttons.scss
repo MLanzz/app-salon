@@ -1,6 +1,17 @@
 @use "base/variables" as v;
 @use "base/mixins" as m;
 
+.buttons-container {
+    @include m.tablet {
+        display: flex;
+        justify-content: space-between;
+
+        input[type=button] {
+            margin: 0;
+        }
+    }
+}
+
 .button {
     @include m.boton(v.$azul, v.$blanco);
 }

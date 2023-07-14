@@ -27,7 +27,11 @@
         <li>
             <p><span>Nombre:</span> <?php echo $service->serviceName; ?></p>
             <p><span>Precio:</span> $ <?php echo $service->price; ?></p>
-            <input type="button" class="button" value="Actualizar servicio" name="serviceUpdate" serviceName="<?php echo $service->serviceName; ?>" servicePrice="<?php echo $service->price; ?>">
+            <div class="buttons-container">
+                <input type="button" class="button" value="Actualizar servicio" name="serviceUpdate" serviceName="<?php echo $service->serviceName; ?>" servicePrice="<?php echo $service->price; ?>">
+
+                <input type="button" class="button-delete" value="Eliminar servicio" name="serviceDelete" serviceId="<?php echo $service->id; ?>">
+            </div>
         </li>
         <hr>
     <?php endforeach; ?>
@@ -37,5 +41,6 @@
 <?php 
     $script = "
         <script src='build/js/services.js'></script>
+        <script src='build/js/sideNav.js'></script>
     "
 ?>
