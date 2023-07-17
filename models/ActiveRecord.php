@@ -81,7 +81,7 @@ class ActiveRecord {
     }
 
     // Sincroniza BD con Objetos en memoria
-    public function sincronizar($args=[]) { 
+    public function sync($args=[]) { 
         foreach($args as $key => $value) {
           if(property_exists($this, $key) && !is_null($value)) {
             $this->$key = $value;
@@ -92,7 +92,7 @@ class ActiveRecord {
     // Registros - CRUD
     public function save() {
         $resultado = '';
-        if(!is_null($this->id)) {
+        if(!is_null($this->id) && $this->id !== "0") {
             // actualizar
             $resultado = $this->update();
         } else {

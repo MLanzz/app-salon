@@ -101,6 +101,13 @@ class APIController {
 
         $result = $service->save();
 
+        $id = $result["id"] ?? 0;
+
+        // Si tenemos un id en el result significa que estamos creando
+        if (intval($id) !== 0) {
+            $service->sync(["id" => $id]);
+        }
+
         $response = [
             "result" => $result,
             "service" => $service

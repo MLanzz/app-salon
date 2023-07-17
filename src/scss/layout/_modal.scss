@@ -1,0 +1,21 @@
+@use "base/variables" as v;
+
+dialog {
+    width: 50rem;
+    background-color: v.$negro;
+    border: solid .1rem v.$gris;
+    border-radius: 1rem;
+
+    
+    .field {
+        label {
+            width: 15rem;
+            color: v.$blanco;
+        }
+    }
+}
+
+dialog::backdrop {
+    background-color: v.$negro;
+    opacity: .7;
+}

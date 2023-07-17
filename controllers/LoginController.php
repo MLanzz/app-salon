@@ -138,7 +138,7 @@ class LoginController {
         $user = new User();
         $alerts = [];
         if($_SERVER["REQUEST_METHOD"] === "POST") {
-            $user->sincronizar($_POST);
+            $user->sync($_POST);
 
             $alerts = $user->validateUser();
 
