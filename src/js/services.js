@@ -18,8 +18,8 @@ const initModal = () => {
     updateServiceBtns.forEach(updateServiceBtn => {
         updateServiceBtn.addEventListener("click", e => {
             const serviceId = e.target.dataset.id;
-            const serviceName = e.target.dataset.serviceName;
-            const servicePrice = e.target.dataset.servicePrice;
+            const serviceName = e.target.dataset.servicename;
+            const servicePrice = e.target.dataset.serviceprice;
 
             openModal(serviceId, serviceName, servicePrice);
         })
@@ -46,9 +46,9 @@ const initModal = () => {
 
     submitBtn = document.querySelector("#submit-modal");
     submitBtn.addEventListener("click", () => {
-        const dialogServiceId = document.querySelector("#dialogServiceId");
-        const dialogServiceName = document.querySelector("#dialogServiceName");
-        const dialogServicePrice = document.querySelector("#dialogServicePrice"); 
+        const dialogServiceId = document.querySelector("#dialogServiceId").value;
+        const dialogServiceName = document.querySelector("#dialogServiceName").value;
+        const dialogServicePrice = document.querySelector("#dialogServicePrice").value; 
         saveService(dialogServiceId, dialogServiceName, dialogServicePrice);
     });
 
@@ -69,9 +69,9 @@ const openModal = (serviceId = 0, serviceName = "", servicePrice = "") => {
 const saveService = async (serviceId, serviceName, servicePrice) => {
     
     const postData = new FormData();
-    postData.append("serviceId", serviceId);
+    postData.append("id", serviceId);
     postData.append("serviceName", serviceName);
-    postData.append("servicePrice", servicePrice);
+    postData.append("price", servicePrice);
 
     const url = "/api/saveService";
     try {
@@ -80,16 +80,27 @@ const saveService = async (serviceId, serviceName, servicePrice) => {
             body: postData
         });
 
-        const data = response.json();
+        const data = await response.json();
 
-        if (data.result) {
+        const result = (serviceId !== "0") ? data.result : data.result.resultado;
+
+        document.querySelector("dialog").close();
+
+        if (result) {
             Swal.fire({
                 icon: 'success',
-                title: 'Cita creada',
-                text: '¡Cita agendada correctamente!'
+                title: 'Servicio creado',
+                text: '¡Cita creado correctamente!'
             }).then(() => {
+                console.log("llego")
                 // Si el proceso se completo correctamente agregamos/modificamos el servicio en la UI
-                renderService(data.service)
+                renderService(data.service);
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: `Ocurrió un error guardando la cita`,
             });
         }
     } catch (error) {
@@ -102,15 +113,36 @@ const saveService = async (serviceId, serviceName, servicePrice) => {
 }
 
 const renderService = (service) => {
-    const serviceList = document.querySelector("#serviceList");
 
+    const {id, serviceName, price} = service;
+    
     const servicesList = Array.from(document.querySelectorAll("ul[id='service-list'] li"));
-    let newService = servicesList.find(e => e.dataset.serviceId === service.id);
-
-    if (newService){
-        console.log("Se esta actualizando")
+    let newService = servicesList.find(e => e.dataset.serviceId === id);
+    
+    if (!newService){
+        const newServiceHTML = `
+            <li data-service-id="${id}">
+                <p><span>Nombre:</span> <span class="service-desc">${serviceName}</span></p>
+                <p><span>Precio:</span> $ <span class="service-desc">${price}</span></p>
+                <div class="buttons-container">
+                    <input type="button" class="button" value="Actualizar servicio" name="serviceUpdate" data-id="${id}" data-serviceName="${serviceName}" data-servicePrice="${price}">
+                    
+                    <input type="button" class="button-delete" value="Eliminar servicio" name="serviceDelete" data-id="${id}">
+                </div>
+            </li>
+            <hr>
+        `;
+        const serviceList = document.querySelector("#service-list");
+        serviceList.insertAdjacentHTML('beforeend', newServiceHTML);
     } else {
-        console.log("Se esta creando")
+        newService.innerHTML = `
+            <p><span>Nombre:</span> <span class="service-desc">${serviceName}</span></p>
+            <p><span>Precio:</span> $ <span class="service-desc">${price}</span></p>
+            <div class="buttons-container">
+                <input type="button" class="button" value="Actualizar servicio" name="serviceUpdate" data-id="${id}" data-serviceName="${serviceName}" data-servicePrice="${price}">
+                
+                <input type="button" class="button-delete" value="Eliminar servicio" name="serviceDelete" data-id="${id}">
+            </div>
+        `
     }
-    console.log(newService)
 }

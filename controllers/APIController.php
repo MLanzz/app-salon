@@ -98,6 +98,7 @@ class APIController {
 
     public static function saveService() {
         $service = new Service($_POST);
+        // debuguear($service);
 
         $result = $service->save();
 
