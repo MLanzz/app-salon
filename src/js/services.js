@@ -48,7 +48,7 @@ const initModal = () => {
     submitBtn.addEventListener("click", () => {
         const dialogServiceId = document.querySelector("#dialogServiceId").value;
         const dialogServiceName = document.querySelector("#dialogServiceName").value;
-        const dialogServicePrice = document.querySelector("#dialogServicePrice").value; 
+        const dialogServicePrice = document.querySelector("#dialogServicePrice").value;
         saveService(dialogServiceId, dialogServiceName, dialogServicePrice);
     });
 
@@ -82,32 +82,50 @@ const saveService = async (serviceId, serviceName, servicePrice) => {
 
         const data = await response.json();
 
-        const result = (serviceId !== "0") ? data.result : data.result.resultado;
+        let result;
+        let swalText;
+        if (serviceId !== "0") {
+            result = data.result;
+            swalText = 'actualizado'
+        } else {
+            result = data.result.resultado
+            swalText = 'creado'
+        }
 
         document.querySelector("dialog").close();
 
         if (result) {
             Swal.fire({
                 icon: 'success',
-                title: 'Servicio creado',
-                text: '¡Cita creado correctamente!'
+                title: `Servicio ${swalText}`,
+                text: `Servicio ${swalText} correctamente!`
             }).then(() => {
-                console.log("llego")
+                console.log("llego");
                 // Si el proceso se completo correctamente agregamos/modificamos el servicio en la UI
                 renderService(data.service);
             });
         } else {
+            let errorText = "";
+            data.errors.forEach(element => {
+                errorText += `<li>${element}</li>`
+            });
+
+            console.log(errorText);
+
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: `Ocurrió un error guardando la cita`,
+                html: `
+                    Ocurrieron los siguientes errores:
+                    <ul><b>${errorText}</b></ul>
+                `,
             });
         }
     } catch (error) {
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: `Ocurrió un error guardando la cita - ${error}`,
+            text: `Ocurrió un error guardando el servicio - ${error}`,
         });
     }
 }

@@ -98,20 +98,24 @@ class APIController {
 
     public static function saveService() {
         $service = new Service($_POST);
-        // debuguear($service);
+        
+        $errors = $service->validate();
 
-        $result = $service->save();
+        if(!$errors) {
+            $result = $service->save();
+    
+            $id = $result["id"] ?? 0;
 
-        $id = $result["id"] ?? 0;
-
-        // Si tenemos un id en el result significa que estamos creando
-        if (intval($id) !== 0) {
-            $service->sync(["id" => $id]);
+            // Si tenemos un id en el result significa que estamos creando
+            if (intval($id) !== 0) {
+                $service->sync(["id" => $id]);
+            }
         }
 
         $response = [
-            "result" => $result,
-            "service" => $service
+            "result" => $result ?? false,
+            "service" => $service,
+            "errors" => $errors
         ];
 
         echo json_encode($response);
