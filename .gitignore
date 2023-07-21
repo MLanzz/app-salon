@@ -4,7 +4,8 @@ vendor
 
 .DS_Store
 
-includes/database.php
 src/js/config.js
 public/build/js/config.js
 src/js/config.js
+
+includes/.env

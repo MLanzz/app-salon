@@ -19,20 +19,10 @@ class Email {
     public function sendConfirmationEmail() {
 
         $mail = static::configEmail();
-        // Creamos el objeto de email
-        // $mail = new PHPMailer();
-        // $mail->isSMTP();
-        // $mail->Host = 'sandbox.smtp.mailtrap.io';
-        // $mail->SMTPAuth = true;
-        // $mail->Port = 2525;
-        // $mail->Username = '9c6fd3a5e10451';
-        // $mail->Password = 'e947aad2035306';
 
-        // $mail->setFrom('cuentas@appsalon.com');
-        // $mail->addAddress('cuentas@appsalon.com', 'AppSalon.com');
         $mail->Subject = "Confirma tu cuenta";
 
-        $content = "<html><p><strong>Hola {$this->fullName}</strong> has creado tu cuenta en App Salon <br> Has click <a href='http://localhost:3000/confirmAccount?token={$this->token}' target='_blank'>aquí</a> para confirmar y comenzar</p>";
+        $content = "<html><p><strong>Hola {$this->fullName}</strong> has creado tu cuenta en App Salon <br> Has click <a href='{$_ENV["app_url"]}/confirmAccount?token={$this->token}' target='_blank'>aquí</a> para confirmar y comenzar</p>";
 
         $content .= "<p>Si no solicito esta cuenta, por favor ignorar este mensaje</p></html>";
 
@@ -46,7 +36,7 @@ class Email {
 
         $mail->Subject = "Reestablecer contraseña tu cuenta";
 
-        $content = "<html><p><strong>Hola {$this->fullName}</strong> ha solicitado reestablecer su contraseña <br> Has click <a href='http://localhost:3000/resetPassword?token={$this->token}' target='_blank'>aquí</a> para continuar</p>";
+        $content = "<html><p><strong>Hola {$this->fullName}</strong> ha solicitado reestablecer su contraseña <br> Has click <a href='{$_ENV["app_url"]}/resetPassword?token={$this->token}' target='_blank'>aquí</a> para continuar</p>";
 
         $content .= "<p>Si no solicito esta cuenta, por favor ignorar este mensaje</p></html>";
 
@@ -61,11 +51,11 @@ class Email {
         // Creamos el objeto de email
         $mail = new PHPMailer();
         $mail->isSMTP();
-        $mail->Host = 'sandbox.smtp.mailtrap.io';
+        $mail->Host = $_ENV["email_host"];
         $mail->SMTPAuth = true;
-        $mail->Port = 2525;
-        $mail->Username = '9c6fd3a5e10451';
-        $mail->Password = 'e947aad2035306';
+        $mail->Port = $_ENV["email_port"];
+        $mail->Username = $_ENV["email_user"];
+        $mail->Password = $_ENV["email_pass"];
 
         $mail->setFrom('cuentas@appsalon.com');
         $mail->addAddress('cuentas@appsalon.com', 'AppSalon.com');
