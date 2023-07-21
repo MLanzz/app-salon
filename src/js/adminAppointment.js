@@ -103,6 +103,7 @@ const createServicesTables = (appointmentServices, appointmentId) => {
             </td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
     `;
 
@@ -133,7 +134,7 @@ const displayLoading = (appointmentId) => {
 
     const loading = `
         <tr class="trLoading">
-            <td colspan="6">
+            <td colspan="7">
                 <div class="loading"></div>
             </td>
         </tr>

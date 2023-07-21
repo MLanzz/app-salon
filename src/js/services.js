@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const initServices = () => {
     initModal();
+    initDeleteService();
 }
 
 const initModal = () => {
@@ -98,7 +99,8 @@ const saveService = async (serviceId, serviceName, servicePrice) => {
             Swal.fire({
                 icon: 'success',
                 title: `Servicio ${swalText}`,
-                text: `Servicio ${swalText} correctamente!`
+                text: `Servicio ${swalText} correctamente!`,
+                heightAuto: false
             }).then(() => {
                 console.log("llego");
                 // Si el proceso se completo correctamente agregamos/modificamos el servicio en la UI
@@ -113,12 +115,12 @@ const saveService = async (serviceId, serviceName, servicePrice) => {
             console.log(errorText);
 
             Swal.fire({
-                icon: 'error',
-                title: 'Error',
+                icon: 'warning',
                 html: `
-                    Ocurrieron los siguientes errores:
+                    <b>Ocurrieron los siguientes errores:</b>
                     <ul><b>${errorText}</b></ul>
                 `,
+                heightAuto: false
             });
         }
     } catch (error) {
@@ -126,6 +128,7 @@ const saveService = async (serviceId, serviceName, servicePrice) => {
             icon: 'error',
             title: 'Error',
             text: `Ocurrió un error guardando el servicio - ${error}`,
+            heightAuto: false
         });
     }
 }
@@ -163,4 +166,78 @@ const renderService = (service) => {
             </div>
         `
     }
+}
+
+const initDeleteService = () => {
+    const deleteBtns = document.querySelectorAll("[name='serviceDelete']");
+
+    deleteBtns.forEach(deleteBtn => {
+        deleteBtn.addEventListener("click", (e) => {
+            Swal.fire({
+                title: '¿Estas seguro que desea eliminar el servicio?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Cancelar',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Eliminar',
+                heightAuto: false
+
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const serviceId = e.target.dataset.id;
+                    deleteService(serviceId);
+                }
+            });
+        });
+    });
+}
+
+const deleteService = async (serviceId) => {
+    const postData = new FormData();
+
+    postData.append("id", serviceId);
+
+    try {
+        const response = await fetch("/api/deleteService", {
+            method: "POST",
+            body: postData
+        });
+
+        const { result } = await response.json();
+
+        if (result) {
+            Swal.fire({
+                title: 'Servicio Eliminado',
+                text: 'Servicio eliminado correctamente',
+                icon: 'success',
+                heightAuto: false
+
+            });
+
+            removeService(serviceId);
+        } else {
+            Swal.fire({
+                title: 'Error Eliminado',
+                text: 'Ocurrió un error eliminando el servicio',
+                icon: 'error',
+                heightAuto: false
+
+            });
+        }
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: `Ocurrió un error eliminando el servicio - ${error}`,
+            heightAuto: false
+        });
+    }
+}
+
+const removeService = (serviceId) => {
+    const service = document.querySelector(`ul li[data-service-id="${serviceId}"]`);
+    
+    service.nextElementSibling.remove();
+    service.remove();
 }

@@ -27,7 +27,7 @@ class Service extends ActiveRecord {
             self::$alerts[] = "El precio debe ser mayor a $0";
         
         }
-        if($this->price && !filter_var($this->price, FILTER_VALIDATE_INT)) {
+        if($this->price && !filter_var($this->price, FILTER_VALIDATE_FLOAT)) {
             self::$alerts[] = "El precio debe ser un valor numerico";
         }
 
